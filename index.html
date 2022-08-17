@@ -17,7 +17,7 @@
 					<label for="search" class="col-form-label">Search</label>
 			    </div>
 			    <div class="col">
-					<input type="search" id="search" oninput="searching(data)" placeholder="search by name" class="form-control" />
+					<input type="search" name="search" id="search" placeholder="search by name" class="form-control" />
 				</div>
 			</form>
 			<section id="lists"></section>
@@ -100,23 +100,6 @@
 				div.setAttribute('class', 'col-auto btn-group');
 				div.innerHTML = html;
 				document.getElementById("pages").appendChild(div);
-			}
-			
-			function searching() {
-				const search = document.getElementById('search').value;
-				let searchData = data.filter(el => el.name.toLowerCase().search(search.toLowerCase()) >= 0);	
-				searchData = searchData.sort((a, b) => {
-					if (a.name < b.name) return -1;
-					if (a.name > b.name) return 1;
-					return 0;
-				});
-				document.getElementById("list").remove();
-				document.getElementById("page").remove();
-				const params = new Proxy(new URLSearchParams(window.location.search), {
-				    get: (searchParams, prop) => searchParams.get(prop),
-				});
-				let page = params.page || 1;
-				generateHTML(searchData, page, search);
 			}
 			
 			run(JSON.parse(d));
